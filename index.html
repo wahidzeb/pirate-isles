@@ -286,7 +286,9 @@ var $ = function (s) { return document.querySelector(s); }, $$ = function (s) { 
 var cv = $('#cv'), g = cv.getContext('2d'), W = 0, H = 0, DPR = 1, Z = 1;
 var KEY = 'pirateisles_v1', WS = 4200;
 var SAVE = { gold: 60, xp: 0, rank: 1, up: { hull: 0, sail: 0, can: 0, cargo: 0 }, ship: 0, owned: [0], story: 0, port: 0, snd: 1, mus: 1, diff: 1, tut: 0, ach: {}, stats: { sunk: 0, chests: 0, treasure: 0, missions: 0, earned: 0 } };
-try { var _s = JSON.parse(localStorage.getItem(KEY)); if (_s) for (var k in _s) SAVE[k] = _s[k]; } catch (e) {}
+// Save migration: deep-merge a loaded save onto the default schema. Keeps all progress, fills fields missing from older/partial saves, and ignores null or wrong-typed values.
+function zMerge(d, s) { if (Array.isArray(d)) { if (!Array.isArray(s)) return d; const n = Math.max(d.length, s.length), o = []; for (let i = 0; i < n; i++) { const dv = d[i], v = s[i]; o[i] = i >= d.length ? v : (v == null || (dv != null && typeof dv !== typeof v) || (typeof v === 'number' && !isFinite(v))) ? dv : (dv && typeof dv === 'object') ? zMerge(dv, v) : v; } return o; } if (!d || typeof d !== 'object') return s; if (!s || typeof s !== 'object' || Array.isArray(s)) return d; for (const k in s) { const v = s[k], dv = d[k]; if (v == null) continue; if (dv === undefined || dv === null) { d[k] = v; continue; } if (typeof dv !== typeof v || Array.isArray(dv) !== Array.isArray(v)) continue; if (typeof v === 'number' && !isFinite(v)) continue; d[k] = typeof v === 'object' ? zMerge(dv, v) : v; } return d; }
+try { var _s = JSON.parse(localStorage.getItem(KEY)); if (_s && typeof _s === 'object' && !Array.isArray(_s)) SAVE = zMerge(SAVE, _s); } catch (e) {}
 function save() { try { localStorage.setItem(KEY, JSON.stringify(SAVE)); } catch (e) {} }
 function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
 function dist(a, b) { var dx = a.x - b.x, dy = a.y - b.y; return Math.sqrt(dx * dx + dy * dy); }
