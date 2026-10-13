@@ -1,0 +1,42 @@
+{
+  "id": "/pirate-isles/",
+  "name": "Pirate Isles",
+  "short_name": "Pirate Isles",
+  "description": "Pirate Isles by Zaib: captain a pirate ship across a sunny island sea. Sail between ports, deliver cargo, dig up buried treasure, chase off cartoon pirates with auto-firing cannons, beat bosses and upgrade your ship from a little sloop to a mighty galleon. Free in your browser.",
+  "lang": "en",
+  "start_url": "/pirate-isles/?source=pwa",
+  "scope": "/pirate-isles/",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#1b8fd6",
+  "background_color": "#1b8fd6",
+  "categories": [
+    "games"
+  ],
+  "icons": [
+    {
+      "src": "/pirate-isles/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pirate-isles/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pirate-isles/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/pirate-isles/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
